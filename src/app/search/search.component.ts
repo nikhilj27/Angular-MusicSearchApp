@@ -1,0 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+import { SpotifyService } from '../spotify.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
+})
+export class SearchComponent implements OnInit {
+
+  query: string;
+  results: Object;
+
+  constructor(private http: SpotifyService,
+    private router: Router,
+    private route: ActivatedRoute) {
+
+    this.route.queryParams.subscribe(params => {
+      this.query = params['query'] || '';
+    });
+  }
+
+  ngOnInit() {
+    this.search();
+  }
+
+  search(): void {
+    console.log('this query', this.query);
+    if (!this.query) {
+      return;
+    }
+
+    this.http.searchTrack(this.query).subscribe(
+      (res: any) => {
+        this.renderResults(res);
+      });
+  }
+
+  renderResults(res: any): void {
+    this.results = null;
+    if (res && res.track && res.track.items) {
+      this.results = res.track.items;
+      console.log(this.results);
+    }
+  }
+
+
+  submit(query: string): void {
+    this.router.navigate(['search'], { queryParams: { query: query } })
+      .then(_ => this.search());
+  }
+
+}

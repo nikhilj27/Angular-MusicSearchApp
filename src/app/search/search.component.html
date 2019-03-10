@@ -1,0 +1,28 @@
+<div class="row">
+  <p class="col-md-3">
+    <input placeholder='Search Track..' class="form-control" type="text" #newQuery [value]="query"
+      (keydown.enter)="submit(newQuery.value)">
+  </p>
+  <p>
+    <button class="btn btn-primary" (click)="submit(newQuery.value)">Search</button>
+  </p>
+</div>
+
+<!-- <div *ngIf="results">
+  <div *ngIf="!results.length">
+    No Tracks were found with the term '{{query}}'
+  </div>
+</div>
+
+<div *ngIf="results.length">
+  <h1>Results</h1>
+  <div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let t of results">
+      <div class="thumbnail">
+        <div class="content">
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
